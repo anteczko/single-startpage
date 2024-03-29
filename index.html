@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title of the document</title>
+    <script src="libs/vue/vue.global.js"></script>
+    <link rel="stylesheet" href="/libs/fontawesome/css/all.min.css">
+    <script defer src="/libs/fontawesome/js/all.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col bg-info-subtle">
+                <center>
+                    <div class="bg-danger" style="width: 400px; height: 200px"></div>
+                </center>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col bg-warning-subtle">
+                <div class="input-group">
+                    <input type="text" class="form-control w-25" placeholder="search">
+                    <button class="btn btn-info" type="button">Lucky</button>
+                    <button class="btn btn-primary" type="button">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 row-cols-lg-6 justify-content-center align-items-center text-center">
+            <div class="col bg-info">
+                1
+            </div>
+            <div class="col bg-success">
+                2
+
+            </div>
+            <div class="col bg-warning">
+                3
+
+            </div>
+            <div class="col bg-primary">
+                4
+
+            </div>
+        </div>
+
+        <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 row-cols-lg-6 justify-content-center align-items-center text-center
+                        g-2">
+            <div class="col">
+                <ul class="list-group">
+                    <li class="list-group-item active" aria-current="true">An active item</li>
+                    <li class="list-group-item">A second item</li>
+                    <li class="list-group-item">A third item</li>
+                    <li class="list-group-item">A fourth item</li>
+                    <li class="list-group-item">And a fifth one</li>
+                </ul>
+            </div>
+            <div class="col">
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">A second item</li>
+                    <li class="list-group-item list-group-item-action btn-success">
+                        An active item
+                    </li>
+                    <li class="list-group-item list-group-item-action btn-success">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Search in web
+                    </li>
+                    <li class="list-group-item list-group-item-action btn-success">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-dark">
+                        Edited category
+                        <div class="btn btn-success float-end float-end-absolute">
+                            <i class="fa-solid fa-plus-circle"></i>
+                        </div>
+
+                    </li>
+                    <li class="list-group-item list-group-item-action btn-success">
+                        An active item
+                        <div class="btn btn-success float-end float-end-absolute btn-sm">
+                            <i class="fa-solid fa-plus-circle"></i>
+                        </div>
+                    </li>
+                    <li class="list-group-item list-group-item-action btn-success">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Search in web
+                    </li>
+                    <li class="list-group-item list-group-item-action btn-success">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        Add category
+                    </li>
+                    <li class="list-group-item list-group-item-action p-5">
+                        <i class="fa-solid fa-plus"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row bg-warning-subtle">
+            <div class="col col-lg-4 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Editing category
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Name</span>
+                            <input type="text" class="form-control" placeholder="Category name">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Color</span>
+                            <input type="color" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Icon</span>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-lg-8 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        Editing site
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Name</span>
+                            <input type="text" class="form-control" placeholder="Site name">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Adress</span>
+                            <input type="text" class="form-control" placeholder="Adress">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Search adress</span>
+                            <input type="text" class="form-control" placeholder="Search adress">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Color</span>
+                            <input type="color" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Icon</span>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <div class="col">
+                <button class="btn btn-dark">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Edit
+                </button>
+            </div>
+            <div class="col">
+                <button class="btn btn-dark">
+                    asdfasfd
+                </button>
+            </div>
+            <div class="col">
+                <button class="btn btn-dark">
+                    <i class="fa-solid fa-gear"></i>
+                    Settings
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">Toggle offcanvas</button>
+
+            <div class="alert alert-info d-none d-lg-block">Resize your browser to show the responsive offcanvas toggle.</div>
+
+            <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasResponsive" aria-labelledby="offcanvasResponsiveLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasResponsiveLabel">Responsive offcanvas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <div class="card">
+                        <div class="card-header">
+                            Editing site
+                        </div>
+                        <div class="card-body">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Name</span>
+                                <input type="text" class="form-control" placeholder="Site name">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Adress</span>
+                                <input type="text" class="form-control" placeholder="Adress">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Search adress</span>
+                                <input type="text" class="form-control" placeholder="Search adress">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Color</span>
+                                <input type="color" class="form-control">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Icon</span>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="app">
+        <h1>{{ message }}</h1>
+    </div>
+</body>
+
+<script>
+    // Create a Vue instance
+    const app = Vue.createApp({
+        data() {
+            return {
+                message: 'Vue.js is imported successfully!'
+            }
+        }
+    });
+
+    // Mount the Vue instance to the #app div
+    app.mount('#app');
+</script>
+
+<style>
+    .float-end-absolute {
+        position: absolute;
+        top: 0%;
+        left: 85%;
+        transform: translate(-50%, 5%);
+    }
+
+    .offcanvas{
+        height: fit-content !important;
+    }
+</style>
+
+<link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</html>

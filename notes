@@ -1,0 +1,12 @@
+Entites:
+category:
+-name
+-color
+-iconString
+
+site:
+-name
+-adress
+-searchAddress
+-color
+-iconString
