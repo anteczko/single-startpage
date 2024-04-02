@@ -9,123 +9,135 @@
     <script defer src="/libs/fontawesome/js/all.js"></script>
 </head>
 
+<!-- second version, mobile friendly -->
 <body>
-    <div class="container">
+    <div class="container-fluid bg-danger">
         <div class="row">
-            <div class="col bg-info-subtle">
-                <center>
-                    <div class="bg-danger" style="width: 400px; height: 200px"></div>
-                </center>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col bg-warning-subtle">
-                <div class="input-group">
-                    <input type="text" class="form-control w-25" placeholder="search">
-                    <button class="btn btn-info" type="button">Lucky</button>
-                    <button class="btn btn-primary" type="button">Search</button>
+            <div class="col col-12 bg-info-subtle ">
+                <div class="d-flex justify-content-center">
+                    <div style="width: 400px; height: 300px; background-color: yellow">
+                        <center><h1>LOGO</h1></center>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4 row-cols-lg-6 justify-content-center align-items-center text-center g-2">
+        <div class="row">
             <div class="col">
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-dark">A second item</li>
-                    <li class="list-group-item list-group-item-action btn-success">
-                        An active item
-                    </li>
-                    <li class="list-group-item list-group-item-action btn-success">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        Search in web
-                    </li>
-                    <li class="list-group-item list-group-item-action btn-success">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </li>
-                </ul>
+                <div class="container-md bg-info">
+                    <div class="input-group">
+                        <input type="text" class="form-control" >
+                        <button class="btn btn-outline-secondary" type="button">Lucky</button>
+                        <button class="btn btn-outline-secondary" type="button">Search</button>
+                    </div>
+                </div>
             </div>
+        </div>
 
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 bg-success-subtle g-2">
             <div class="col">
-                <div class="card">
-                    <ul class="list-group">
-                        <ul class="list-group list-group-horizontal">
-                            <li class="btn btn-secondary">
-                                <i class="fa-solid fa-square-caret-left"></i>
-                            </li>
-                            <li class="list-group-item flex-fill">
-                                Edited category
-                            </li>
-                            <li class="btn btn-success">
-                                <i class="fa-solid fa-pen"></i>
-                            </li>
-                            <li class="btn btn-secondary">
-                                <i class="fa-solid fa-square-caret-right"></i>
-                            </li>
-                        </ul>
-                        <ul class="list-group list-group-horizontal">
-                            <li class="btn btn-info">
-                                <i class="fa-solid fa-caret-up"></i>
-                            </li>
-                            <li class="list-group-item flex-fill">
-                                <i class="fa-regular fa-face-smile"></i>
-                                Site
-                            </li>
-                            <li class="btn btn-info">
-                                <i class="fa-solid fa-caret-down"></i>
-                            </li>
-                            <li class="btn btn-warning">
-                                <i class="fa-solid fa-plus"></i>
-                            </li>
-                        </ul>
-                        <ul class="list-group list-group-horizontal">
-                            <li class="btn btn-info">
-                                <i class="fa-solid fa-caret-up"></i>
-                            </li>
-                            <li class="list-group-item flex-fill">
-                                <i class="fa-regular fa-face-smile"></i>
-                                Site
-                            </li>
-                            <li class="btn btn-info">
-                                <i class="fa-solid fa-caret-down"></i>
-                            </li>
-                            <li class="btn btn-warning">
-                                <i class="fa-solid fa-plus"></i>
-                            </li>
-                        </ul>
-                        <ul class="list-group list-group-horizontal">
-                            <li class="btn btn-info">
-                                <i class="fa-solid fa-caret-up"></i>
-                            </li>
-                            <li class="list-group-item flex-fill">
-                                <i class="fa-regular fa-face-smile"></i>
-                                Site
-                            </li>
-                            <li class="btn btn-info">
-                                <i class="fa-solid fa-caret-down"></i>
-                            </li>
-                            <li class="btn btn-warning">
-                                <i class="fa-solid fa-plus"></i>
-                            </li>
-                        </ul>
+                <div class="card text-center">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item p-0">
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item btn btn-success">
+                                    <i class="fa-solid fa-angle-left"></i>
+                                </li>
+                                <li class="list-group-item list-group-item-action flex-fill px-0">
+                                    Category name
+                                </li>
+                                <li class="list-group-item btn btn-info">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </li>
+                                <li class="list-group-item btn btn-success">
+                                    <i class="fa-solid fa-angle-right"></i>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item p-0">
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item btn btn-success">
+                                    <i class="fa-solid fa-angle-up"></i>
+                                </li>
+                                <li class="list-group-item list-group-item-action flex-fill px-0">
+                                    <div class="row p-0">
+                                        <div class="col">
+                                            <span class="">
+                                                <i class="fa-brands fa-google"></i>
+                                            </span>
+                                            <span class="">
+                                                Site
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item btn btn-info">
+                                    <i class="fa-solid fa-pen"></i>
+                                </li>
+                                <li class="list-group-item btn btn-success">
+                                    <i class="fa-solid fa-angle-down"></i>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="col">
+                <div class="card text-center">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item p-0">
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item list-group-item-action flex-fill px-0">
+                                    Category name
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item p-0">
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item list-group-item-action flex-fill px-0">
+                                    <div class="row p-0">
+                                        <div class="col">
+                                            <span class="">
+                                                <i class="fa-brands fa-google"></i>
+                                            </span>
+                                            <span class="">
+                                                Site
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
-
             <div class="col">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        Add category
-                    </li>
-                    <li class="list-group-item list-group-item-action p-5">
-                        <i class="fa-solid fa-plus"></i>
-                    </li>
-                </ul>
+                <div class="card text-center">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item p-0">
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item list-group-item-action flex-fill px-0">
+                                    Add category
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item p-0">
+                            <ul class="list-group list-group-horizontal">
+                                <li class="list-group-item list-group-item-action flex-fill px-0">
+                                    <div class="row py-4">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div class="row bg-warning-subtle">
-            <div class="col col-lg-4 col-12">
+        <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasEditCategory">
+            <div class="offcanvas-body small">
                 <div class="card">
                     <div class="card-header">
                         Editing category
@@ -144,9 +156,20 @@
                             <input type="text" class="form-control">
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <div class="btn btn-success">
+                            Save
+                        </div>
+                        <div class="btn btn-danger fa-pull-right">
+                            Cancel
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col col-lg-8 col-12">
+        </div>
+
+        <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasEditSite">
+            <div class="offcanvas-body small">
                 <div class="card">
                     <div class="card-header">
                         Editing site
@@ -173,78 +196,43 @@
                             <input type="text" class="form-control">
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row text-center">
-            <div class="col">
-                <button class="btn btn-dark">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    Edit
-                </button>
-            </div>
-            <div class="col">
-                <button class="btn btn-dark">
-                    asdfasfd
-                </button>
-            </div>
-            <div class="col">
-                <button class="btn btn-dark">
-                    <i class="fa-solid fa-gear"></i>
-                    Settings
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col">
-            <button class="btn btn-primary " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive">Toggle offcanvas</button>
-
-
-            <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasResponsive" aria-labelledby="offcanvasResponsiveLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasResponsiveLabel">Responsive offcanvas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvasResponsive" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <div class="card">
-                        <div class="card-header">
-                            Editing site
+                    <div class="card-footer">
+                        <div class="btn btn-success">
+                            Save
                         </div>
-                        <div class="card-body">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Name</span>
-                                <input type="text" class="form-control" placeholder="Site name">
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Adress</span>
-                                <input type="text" class="form-control" placeholder="Adress">
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Search adress</span>
-                                <input type="text" class="form-control" placeholder="Search adress">
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Color</span>
-                                <input type="color" class="form-control">
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Icon</span>
-                                <input type="text" class="form-control">
-                            </div>
+                        <div class="btn btn-danger fa-pull-right">
+                            Cancel
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row text-center bg-warning fixed-bottom">
+            <div class="col">
+                <div class="btn btn-success">
+                    Edit
+                </div>
+            </div>
+
+            <div class="col">
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEditCategory">
+                    Edit Category
+                </button>
+            </div>
+
+            <div class="col">
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEditSite">
+                    Edit Site
+                </button>
+            </div>
+
+            <div class="col">
+                <div class="btn btn-success">
+                    Settings
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="app">
-        <h1>{{ message }}</h1>
     </div>
 </body>
 
@@ -273,6 +261,7 @@
     .offcanvas{
         height: fit-content !important;
     }
+
 </style>
 
 <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
