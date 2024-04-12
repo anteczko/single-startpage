@@ -9,8 +9,12 @@
     <script defer src="/libs/fontawesome/js/all.js"></script>
 </head>
 
+<link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <!-- second version, mobile friendly -->
 <body>
+<div id="app">
     <div class="container-fluid bg-danger">
         <div class="row">
             <div class="col col-12 bg-info-subtle ">
@@ -25,7 +29,7 @@
         <div class="row justify-content-center">
             <div class="col col-12 bg-warning">
                 <div class="input-group">
-                    <input type="text" class="form-control" >
+                    <input type="text" class="form-control">
                     <button class="btn btn-outline-secondary" type="button">Lucky</button>
                     <button class="btn btn-outline-secondary" type="button">Search</button>
                 </div>
@@ -33,6 +37,8 @@
         </div>
 
         <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 bg-success-subtle g-2">
+
+            <!--
             <div class="col">
                 <div class="card text-center">
                     <ul class="list-group list-group-flush">
@@ -110,6 +116,71 @@
                     </ul>
                 </div>
             </div>
+            -->
+
+            <div class="col" v-for="(category, categoryIndex) in categoryList">
+                <div class="col">
+                    <div class="card text-center">
+                        <ul class="list-group list-group-flush">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item p-0">
+                                    <ul class="list-group list-group-horizontal">
+                                        <li v-if="editMode" class="list-group-item btn btn-success">
+                                            <i class="fa-solid fa-angle-left"></i>
+                                        </li>
+                                        <li class="list-group-item list-group-item-action flex-fill text-truncate px-0">
+                                            {{category.name}}
+                                        </li>
+                                        <li v-if="editMode" class="list-group-item btn btn-info"
+                                            @click="initalizeEditCategory(category.name, category.color, category.icon, categoryIndex, category.sites)">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </li>
+                                        <li v-if="editMode" class="list-group-item btn btn-success">
+                                            <i class="fa-solid fa-angle-right"></i>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li v-for="(site, siteIndex) in category.sites" class="list-group-item p-0">
+                                    <ul class="list-group list-group-horizontal">
+                                        <li v-if="editMode" class="list-group-item btn btn-success">
+                                            <i class="fa-solid fa-angle-up"></i>
+                                        </li>
+                                        <li class="list-group-item list-group-item-action flex-fill text-truncate px-0">
+                                            <div class="row p-0">
+                                                <div class="col">
+                                                    <span class="">
+                                                        <i v=if="site.icon" :class="site.icon"></i>
+                                                    </span>
+                                                    <span class="">
+                                                        {{ site.name }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li v-if="editMode" class="list-group-item btn btn-info" @click="initalizeEditSite(site, categoryIndex, siteIndex)">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </li>
+                                        <li v-if="editMode" class="list-group-item btn btn-success">
+                                            <i class="fa-solid fa-angle-down"></i>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
+                            <li v-if="editMode" class="list-group-item p-0">
+                                <ul class="list-group list-group-horizontal">
+                                    <li class="list-group-item list-group-item-action flex-fill px-0">
+                                        <div class="row py-2" @click="initalizePushSite(categoryIndex)">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <div class="col">
                 <div class="card text-center">
                     <ul class="list-group list-group-flush">
@@ -123,7 +194,7 @@
                         <li class="list-group-item p-0">
                             <ul class="list-group list-group-horizontal">
                                 <li class="list-group-item list-group-item-action flex-fill px-0">
-                                    <div class="row py-4">
+                                    <div class="row py-4" @click="initalizePushCategory">
                                         <i class="fa-solid fa-plus"></i>
                                     </div>
                                 </li>
@@ -134,7 +205,7 @@
             </div>
         </div>
 
-        <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasEditCategory">
+        <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasEditCategory" data-bs-backdrop="static" >
             <div class="offcanvas-body small">
                 <div class="card">
                     <div class="card-header">
@@ -143,31 +214,33 @@
                     <div class="card-body">
                         <div class="input-group mb-3">
                             <span class="input-group-text">Name</span>
-                            <input type="text" class="form-control" placeholder="Category name">
+                            <input v-model="editedCategory.name" type="text" class="form-control"
+                                   placeholder="Category name">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Color</span>
-                            <input type="color" class="form-control">
+                            <input v-model="editedCategory.color" type="color" class="form-control">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Icon</span>
-                            <input type="text" class="form-control">
+                            <input v-model="editedCategory.icon" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="card-footer">
                         <div class="row justify-content-around text-center">
                             <div class="col">
-                                <div class="btn btn-success">
+                                <div class="btn btn-success"
+                                     @click="pushCategory(editedCategory.name, editedCategory.color, editedCategory.icon, editedCategory.categoryIndex, editedCategory.sites)">
                                     Save
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="btn btn-danger ">
+                                <div class="btn btn-danger" @click="deleteCategory(editedCategory.categoryIndex)">
                                     Delete
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="btn btn-warning ">
+                                <div class="btn btn-warning" @click="cancelEditCategory">
                                     Cancel
                                 </div>
                             </div>
@@ -177,7 +250,7 @@
             </div>
         </div>
 
-        <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasEditSite">
+        <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasEditSite" data-bs-backdrop="static" >
             <div class="offcanvas-body small">
                 <div class="card">
                     <div class="card-header">
@@ -186,39 +259,41 @@
                     <div class="card-body">
                         <div class="input-group mb-3">
                             <span class="input-group-text">Name</span>
-                            <input type="text" class="form-control" placeholder="Site name">
+                            <input v-model="editedSite.name" type="text" class="form-control" placeholder="Site name">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Adress</span>
-                            <input type="text" class="form-control" placeholder="Adress">
+                            <input v-model="editedSite.address" type="text" class="form-control" placeholder="Adress">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Search adress</span>
-                            <input type="text" class="form-control" placeholder="Search adress">
+                            <input v-model="editedSite.searchAddress" type="text" class="form-control"
+                                   placeholder="Search adress">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Color</span>
-                            <input type="color" class="form-control">
+                            <input v-model="editedSite.color" type="color" class="form-control">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Icon</span>
-                            <input type="text" class="form-control">
+                            <input v-model="editedSite.icon" type="text" class="form-control">
                         </div>
                     </div>
                     <div class="card-footer">
                         <div class="row justify-content-around text-center">
                             <div class="col">
-                                <div class="btn btn-success">
+                                <div class="btn btn-success"
+                                     @click="pushSite(editedSite.categoryIndex, editedSite.name, editedSite.adress, editedSite.searchAddress, editedSite.color, editedSite.icon, editedSite.siteIndex)">
                                     Save
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="btn btn-danger ">
+                                <div class="btn btn-danger" @click="deleteSite(editedSite.categoryIndex, editedSite.siteIndex)">
                                     Delete
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="btn btn-warning ">
+                                <div class="btn btn-warning " @click="cancelEditSite">
                                     Cancel
                                 </div>
                             </div>
@@ -230,40 +305,203 @@
 
         <div class="row text-center bg-warning fixed-bottom">
             <div class="col">
-                <div class="btn btn-success">
+                <div class="btn btn-success" @click="editMode = !editMode">
                     Edit
                 </div>
             </div>
 
             <div class="col">
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEditCategory">
-                    Edit Category
-                </button>
+                <div class="btn btn-success" @click="editCategoryModal.toggle()">
+                    Category
+                </div>
+            </div>
+            <div class="col">
+                <div class="btn btn-success" @click="editSiteModal.toggle()">
+                    Site
+                </div>
             </div>
 
             <div class="col">
-                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEditSite">
-                    Edit Site
-                </button>
+                <div class="btn btn-success" @click="saveSitesToSessionStorage">
+                    Save
+                </div>
             </div>
-
             <div class="col">
-                <div class="btn btn-success">
-                    Settings
+                <div class="btn btn-success" @click="loadSitesFromSessionStorage">
+                    Load
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 
+
 <script>
+
     // Create a Vue instance
     const app = Vue.createApp({
+        components: {},
         data() {
             return {
-                message: 'Vue.js is imported successfully!'
+                editMode: true,
+                editCategoryModal: null,
+                editSiteModal: null,
+                editedCategory: {
+                    categoryIndex: null,
+                    show: false,
+                    name: null,
+                    color: null,
+                    icon: null,
+                    sites: [],
+                },
+                editedSite: {
+                    categoryIndex: null,
+                    show: false,
+                    name: null,
+                    address: null,
+                    searchAddress: null,
+                    color: null,
+                    icon: null
+                },
+                categoryList: [],
             }
-        }
+        },
+        watch: {
+
+        },
+        methods: {
+            saveSitesToSessionStorage(){
+                sessionStorage.setItem("categoryList", JSON.stringify(this.categoryList) );
+            },
+            loadSitesFromSessionStorage(){
+                this.categoryList = JSON.parse( sessionStorage.getItem("categoryList") ) || [];
+            },
+            pushSite(categoryIndex, name, adress, searchAddress, color, icon, siteIndex=null) {
+                this.editSiteModal.hide();
+                if(siteIndex === null){
+                    this.categoryList[categoryIndex].sites.push({
+                        categoryIndex: this.categoryList[categoryIndex].sites.length,
+                        name: name,
+                        adress: adress,
+                        searchAddress: searchAddress,
+                        color: color,
+                        icon: icon
+                    });
+                }else{
+                    this.categoryList[categoryIndex].sites[siteIndex] = {
+                        siteIndex: siteIndex,
+                        categoryIndex: this.categoryList[categoryIndex].sites.length,
+                        name: name,
+                        adress: adress,
+                        searchAddress: searchAddress,
+                        color: color,
+                        icon: icon
+                    };
+                }
+                this.cancelEditSite();
+            },
+            deleteSite(categoryIndex, siteIndex){
+                if(Number.isInteger(categoryIndex) && categoryIndex >= 0 &&
+                    Number.isInteger(siteIndex) && siteIndex >= 0){
+                    this.categoryList[categoryIndex].sites.splice(siteIndex, 1);
+                    this.clearEditSite();
+                    this.editSiteModal.hide();
+                }
+            },
+            initalizePushSite(categoryIndex) {
+                this.editedSite.show = true;
+                this.editedSite.categoryIndex = categoryIndex;
+                this.editSiteModal.show();
+            },
+            initalizeEditSite(site, categoryIndex, siteIndex){
+                this.editedSite = site;
+                this.editedSite.show = true;
+                this.editedSite.siteIndex = siteIndex;
+                this.editedSite.categoryIndex = categoryIndex;
+                this.editSiteModal.show();
+                
+                console.log(site);
+                console.log("Editing Cidx:"+categoryIndex+" Sidx:"+siteIndex);
+            },
+            clearEditSite(){
+                this.editedSite = {
+                    categoryIndex: null,
+                    show: false,
+                    name: null,
+                    address: null,
+                    searchAddress: null,
+                    color: null,
+                    icon: null
+                };
+            },
+            cancelEditSite(){
+                this.clearEditSite();
+                this.editSiteModal.hide();
+            },
+            clearEditCategory(){
+                this.editedCategory = {
+                    categoryIndex: null,
+                    show: false,
+                    name: null,
+                    color: null,
+                    icon: null
+                };
+            },
+            cancelEditCategory(){
+                this.clearEditCategory();
+                this.editCategoryModal.hide();
+            },
+            initalizePushCategory() {
+                this.editedCategory.show = true;
+                this.editCategoryModal.show();
+            },
+            pushCategory(name, color, icon, categoryIndex, sites){
+                this.editCategoryModal.hide();
+                if(Number.isInteger(categoryIndex) && categoryIndex >= 0){
+                    this.categoryList[categoryIndex] = {
+                        categoryIndex: categoryIndex,
+                        name: name,
+                        color: color,
+                        icon: icon,
+                        sites: sites
+                    };
+                }else{
+                    this.categoryList.push({
+                        name: name,
+                        color: color,
+                        icon: icon,
+                        sites: sites
+                    });
+                }
+                this.cancelEditCategory();
+            },
+            initalizeEditCategory(name, color, icon, categoryIndex, sites){
+                this.editedCategory.name = name;
+                this.editedCategory.color = color;
+                this.editedCategory.icon = icon;
+                this.editedCategory.categoryIndex = categoryIndex;
+                this.editedCategory.sites = sites;
+                this.editCategoryModal.show();
+            },
+            deleteCategory(categoryIndex){
+                if(Number.isInteger(categoryIndex) && categoryIndex >= 0){
+                    this.categoryList.splice(categoryIndex, 1);
+                    this.clearEditSite();
+                    this.editCategoryModal.hide();
+                }
+            },
+        },
+        mounted() {
+            console.log(`the component is now mounted.`)
+            this.editSiteModal = new bootstrap.Offcanvas(document.getElementById('offcanvasEditSite'));
+            this.editCategoryModal = new bootstrap.Offcanvas(document.getElementById('offcanvasEditCategory'));
+
+            this.loadSitesFromSessionStorage();
+        },
+        beforeMount() {
+
+        },
     });
 
     // Mount the Vue instance to the #app div
@@ -278,13 +516,11 @@
         transform: translate(-50%, 5%);
     }
 
-    .offcanvas{
+    .offcanvas {
         height: fit-content !important;
     }
 
 </style>
 
-<link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </html>
