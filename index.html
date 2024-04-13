@@ -140,9 +140,12 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li v-for="(site, siteIndex) in category.sites" class="list-group-item p-0">
-                                    <ul class="list-group list-group-horizontal">
-                                        <li v-if="editMode" class="list-group-item btn btn-success">
+                                <li class="list-group-item p-0">
+                                    <ul class="list-group list-group-horizontal" v-for="(site, siteIndex) in category.sites" >
+                                        <li v-if="editMode" class="list-group-item btn btn-success px-2">
+                                            <i class="fa-solid fa-angle-left"></i>
+                                        </li>
+                                        <li v-if="editMode" class="list-group-item btn btn-success px-2">
                                             <i class="fa-solid fa-angle-up"></i>
                                         </li>
                                         <li class="list-group-item list-group-item-action flex-fill text-truncate px-0">
@@ -160,8 +163,11 @@
                                         <li v-if="editMode" class="list-group-item btn btn-info" @click="initalizeEditSite(site, categoryIndex, siteIndex)">
                                             <i class="fa-solid fa-pen"></i>
                                         </li>
-                                        <li v-if="editMode" class="list-group-item btn btn-success">
+                                        <li v-if="editMode" class="list-group-item btn btn-success px-2">
                                             <i class="fa-solid fa-angle-down"></i>
+                                        </li>
+                                        <li v-if="editMode" class="list-group-item btn btn-success px-2">
+                                            <i class="fa-solid fa-angle-right"></i>
                                         </li>
                                     </ul>
                                 </li>
