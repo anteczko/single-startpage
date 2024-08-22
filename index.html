@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col col-12 bg-info-subtle ">
                 <div class="d-flex justify-content-center">
-                    <div style="width: 400px; height: 300px; background-color: yellow">
+                    <div style="width: 400px; height: 300px; background-color: pink">
                         <center><h1>LOGO</h1></center>
                     </div>
                 </div>
@@ -35,6 +35,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 bg-success-subtle g-2">
 
@@ -125,51 +126,63 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item p-0">
                                     <ul class="list-group list-group-horizontal">
-                                        <li v-if="editMode" class="list-group-item btn btn-success">
+                                        <li v-if="editMode" class="col-3 list-group-item btn btn-success px-2"
+                                            @click="moveCategory(categoryIndex, (categoryIndex-1))">
                                             <i class="fa-solid fa-angle-left"></i>
                                         </li>
-                                        <li class="list-group-item list-group-item-action flex-fill text-truncate px-0">
-                                            {{category.name}}
+                                        <li class="col list-group-item">
+                                            {{ category.name }}
                                         </li>
-                                        <li v-if="editMode" class="list-group-item btn btn-info"
-                                            @click="initalizeEditCategory(category.name, category.color, category.icon, categoryIndex, category.sites)">
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        <li v-if="editMode" class="list-group-item btn btn-info" @click="initalizeEditCategory(category.name, category.color, category.icon, categoryIndex, category.sites)">
+                                            <i class="fa-solid fa-pen"></i>
                                         </li>
-                                        <li v-if="editMode" class="list-group-item btn btn-success">
+                                        <li v-if="editMode" class="col-3 list-group-item btn btn-success px-2"
+                                            @click="moveCategory(categoryIndex, (categoryIndex+1))">
                                             <i class="fa-solid fa-angle-right"></i>
                                         </li>
                                     </ul>
                                 </li>
+                            </ul>
+
+                            <ul class="list-group list-group-flush">
                                 <li class="list-group-item p-0">
-                                    <ul class="list-group list-group-horizontal" v-for="(site, siteIndex) in category.sites" >
-                                        <li v-if="editMode" class="list-group-item btn btn-success px-2">
-                                            <i class="fa-solid fa-angle-left"></i>
-                                        </li>
-                                        <li v-if="editMode" class="list-group-item btn btn-success px-2">
-                                            <i class="fa-solid fa-angle-up"></i>
-                                        </li>
-                                        <li class="list-group-item list-group-item-action flex-fill text-truncate px-0">
-                                            <div class="row p-0">
-                                                <div class="col">
+                                    <template v-for="(site, siteIndex) in category.sites">
+                                        <ul class="list-group list-group-horizontal">
+                                            <li class="list-group-item list-group-item-action flex-fill px-0">
+                                                <div class="row p-0">
+                                                    <div class="col">
                                                     <span class="">
                                                         <i v=if="site.icon" :class="site.icon"></i>
                                                     </span>
-                                                    <span class="">
+                                                        <span class="">
                                                         {{ site.name }}
                                                     </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li v-if="editMode" class="list-group-item btn btn-info" @click="initalizeEditSite(site, categoryIndex, siteIndex)">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </li>
-                                        <li v-if="editMode" class="list-group-item btn btn-success px-2">
-                                            <i class="fa-solid fa-angle-down"></i>
-                                        </li>
-                                        <li v-if="editMode" class="list-group-item btn btn-success px-2">
-                                            <i class="fa-solid fa-angle-right"></i>
-                                        </li>
-                                    </ul>
+                                            </li>
+                                            <li v-if="editMode" class="list-group-item btn btn-info" @click="initalizeEditSite(site, categoryIndex, siteIndex)">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </li>
+                                        </ul>
+                                        <ul class="list-group list-group-horizontal" v-if="editMode">
+                                            <li class="col-3 list-group-item btn btn-success px-2"
+                                                @click="moveSite(categoryIndex, siteIndex,categoryIndex-1, siteIndex)">
+                                                <i class="fa-solid fa-angle-left"></i>
+                                            </li>
+                                            <li class="col-3 list-group-item btn btn-success px-2"
+                                                @click="moveSite(categoryIndex, siteIndex,categoryIndex, siteIndex-1)">
+                                                <i class="fa-solid fa-angle-up"></i>
+                                            </li>
+                                            <li class="col-3 list-group-item btn btn-success px-2"
+                                                @click="moveSite(categoryIndex, siteIndex,categoryIndex, siteIndex+1)">
+                                                <i class="fa-solid fa-angle-down"></i>
+                                            </li>
+                                            <li class="col-3 list-group-item btn btn-success px-2"
+                                                @click="moveSite(categoryIndex, siteIndex,categoryIndex+1, siteIndex)">
+                                                <i class="fa-solid fa-angle-right"></i>
+                                            </li>
+                                        </ul>
+                                    </template>
                                 </li>
                             </ul>
 
@@ -463,6 +476,8 @@
                 this.editCategoryModal.show();
             },
             pushCategory(name, color, icon, categoryIndex, sites){
+                if(sites === undefined)sites = [];
+
                 this.editCategoryModal.hide();
                 if(Number.isInteger(categoryIndex) && categoryIndex >= 0){
                     this.categoryList[categoryIndex] = {
@@ -497,6 +512,37 @@
                     this.editCategoryModal.hide();
                 }
             },
+            moveCategory(currentCategoryIndex, destinationCategoryIndex){
+                if(destinationCategoryIndex != currentCategoryIndex 
+                    && destinationCategoryIndex < this.categoryList.length 
+                    && destinationCategoryIndex >= 0){
+                        const tempCurrentCategory = JSON.parse(JSON.stringify( this.categoryList[currentCategoryIndex] ));
+                        const tempDestinationCategory = JSON.parse(JSON.stringify( this.categoryList[destinationCategoryIndex] ));
+
+                        this.categoryList[currentCategoryIndex] = tempDestinationCategory;
+                        this.categoryList[destinationCategoryIndex] = tempCurrentCategory;
+                    
+                }
+            },
+            moveSite(currentCategoryIndex, currentSiteIndex, destinationCategoryIndex, destinationSiteIndex){
+                const tempCurrentSite = JSON.parse(JSON.stringify( this.categoryList[currentCategoryIndex].sites[currentSiteIndex] ));
+
+                if(currentCategoryIndex != destinationCategoryIndex){
+                    this.categoryList[currentCategoryIndex].sites.splice(currentSiteIndex, 1);
+                    this.categoryList[destinationCategoryIndex].sites.push(tempCurrentSite);
+                }else{
+                    if(currentSiteIndex != destinationSiteIndex){
+                        const tempDestinationSite =  JSON.parse(JSON.stringify( this.categoryList[destinationCategoryIndex].sites[destinationSiteIndex] ));
+
+                        this.categoryList[destinationCategoryIndex].sites[destinationSiteIndex] = tempCurrentSite;
+                        this.categoryList[currentCategoryIndex].sites[currentSiteIndex] = tempDestinationSite;
+                    }
+                }
+                    
+            },
+            consolePrint(text){
+                console.log(text);
+            }
         },
         mounted() {
             console.log(`the component is now mounted.`)
