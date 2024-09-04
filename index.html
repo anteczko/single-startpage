@@ -26,6 +26,10 @@
             </div>
         </div>
 
+        <div class="btn btn-info" @click="refresh">
+            refresh
+        </div>
+
         <div class="row justify-content-center">
             <div class="col col-12 bg-warning">
                 <div class="input-group">
@@ -37,7 +41,7 @@
         </div>
 
 
-        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 bg-success-subtle g-2">
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 bg-success-subtle g-2" v-if="forceRefresh % 2">
 
             <!--
             <div class="col">
@@ -119,7 +123,7 @@
             </div>
             -->
 
-            <div class="col" v-for="(category, categoryIndex) in categoryList">
+            <div class="col" v-for="(category, categoryIndex) in categoryList" :key="categoryIndex">
                 <div class="col">
                     <div class="card text-center">
                         <ul class="list-group list-group-flush">
@@ -146,17 +150,17 @@
 
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item p-0">
-                                    <template v-for="(site, siteIndex) in category.sites">
+                                    <template v-for="(site, siteIndex) in category.sites" :key="categoryIndex+'x'+siteIndex">
                                         <ul class="list-group list-group-horizontal">
                                             <li class="list-group-item list-group-item-action flex-fill px-0">
                                                 <div class="row p-0">
                                                     <div class="col">
                                                     <span class="">
-                                                        <i v=if="site.icon" :class="site.icon"></i>
+                                                        <i v-if="site.icon" :class="[site.icon]"></i>
                                                     </span>
                                                         <span class="">
-                                                        {{ site.name }}
-                                                    </span>
+                                                            {{ site.name }}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -363,7 +367,9 @@
         components: {},
         data() {
             return {
+                //important variables
                 editMode: true,
+                forceRefresh: true,
                 editCategoryModal: null,
                 editSiteModal: null,
                 editedCategory: {
@@ -387,9 +393,14 @@
             }
         },
         watch: {
-
+            
         },
         methods: {
+            async refresh(){
+                this.forceRefresh = false;
+                await this.$nextTick();
+                this.forceRefresh = true;
+            },
             saveSitesToSessionStorage(){
                 sessionStorage.setItem("categoryList", JSON.stringify(this.categoryList) );
             },
@@ -513,15 +524,20 @@
                 }
             },
             moveCategory(currentCategoryIndex, destinationCategoryIndex){
+              
+                    console.log("currentCategoryIndex: "+currentCategoryIndex+" destinationCategoryIndex: "+destinationCategoryIndex);
+               
+
                 if(destinationCategoryIndex != currentCategoryIndex 
                     && destinationCategoryIndex < this.categoryList.length 
                     && destinationCategoryIndex >= 0){
                         const tempCurrentCategory = JSON.parse(JSON.stringify( this.categoryList[currentCategoryIndex] ));
                         const tempDestinationCategory = JSON.parse(JSON.stringify( this.categoryList[destinationCategoryIndex] ));
-
-                        this.categoryList[currentCategoryIndex] = tempDestinationCategory;
+                        
                         this.categoryList[destinationCategoryIndex] = tempCurrentCategory;
+                        this.categoryList[currentCategoryIndex] = tempDestinationCategory;
                     
+                        this.refresh();
                 }
             },
             moveSite(currentCategoryIndex, currentSiteIndex, destinationCategoryIndex, destinationSiteIndex){
@@ -530,12 +546,14 @@
                 if(currentCategoryIndex != destinationCategoryIndex){
                     this.categoryList[currentCategoryIndex].sites.splice(currentSiteIndex, 1);
                     this.categoryList[destinationCategoryIndex].sites.push(tempCurrentSite);
+                    this.refresh();
                 }else{
                     if(currentSiteIndex != destinationSiteIndex){
                         const tempDestinationSite =  JSON.parse(JSON.stringify( this.categoryList[destinationCategoryIndex].sites[destinationSiteIndex] ));
 
                         this.categoryList[destinationCategoryIndex].sites[destinationSiteIndex] = tempCurrentSite;
                         this.categoryList[currentCategoryIndex].sites[currentSiteIndex] = tempDestinationSite;
+                        this.refresh();
                     }
                 }
                     
