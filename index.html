@@ -33,96 +33,19 @@
         <div class="row justify-content-center">
             <div class="col col-12 bg-warning">
                 <div class="input-group">
-                    <input type="text" class="form-control">
-                    <button class="btn btn-outline-secondary" type="button">Lucky</button>
-                    <button class="btn btn-outline-secondary" type="button">Search</button>
+                    <input type="text" class="form-control" v-model="searchQuery"
+                        @keyup.shift.enter="luckyButtonAction"
+                        @keyup.enter="searchButtonAction">
+                    <button class="btn btn-outline-secondary" type="button"
+                        @click="luckyButtonAction">Lucky</button>
+                    <button class="btn btn-outline-secondary" type="button"
+                        @click="searchButtonAction">Search</button>
                 </div>
             </div>
         </div>
 
 
-        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 bg-success-subtle g-2" v-if="forceRefresh % 2">
-
-            <!--
-            <div class="col">
-                <div class="card text-center">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item p-0">
-                            <ul class="list-group list-group-horizontal">
-                                <li class="list-group-item btn btn-success">
-                                    <i class="fa-solid fa-angle-left"></i>
-                                </li>
-                                <li class="list-group-item list-group-item-action flex-fill text-truncate px-0">
-                                    Category name
-                                </li>
-                                <li class="list-group-item btn btn-info">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </li>
-                                <li class="list-group-item btn btn-success">
-                                    <i class="fa-solid fa-angle-right"></i>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="list-group-item p-0">
-                            <ul class="list-group list-group-horizontal">
-                                <li class="list-group-item btn btn-success">
-                                    <i class="fa-solid fa-angle-up"></i>
-                                </li>
-                                <li class="list-group-item list-group-item-action flex-fill text-truncate px-0">
-                                    <div class="row p-0">
-                                        <div class="col">
-                                            <span class="">
-                                                <i class="fa-brands fa-google"></i>
-                                            </span>
-                                            <span class="">
-                                                Site
-                                            </span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item btn btn-info">
-                                    <i class="fa-solid fa-pen"></i>
-                                </li>
-                                <li class="list-group-item btn btn-success">
-                                    <i class="fa-solid fa-angle-down"></i>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-            <div class="col">
-                <div class="card text-center">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item p-0">
-                            <ul class="list-group list-group-horizontal">
-                                <li class="list-group-item list-group-item-action flex-fill text-truncate px-0">
-                                    Category name
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="list-group-item p-0">
-                            <ul class="list-group list-group-horizontal">
-                                <li class="list-group-item list-group-item-action flex-fill text-truncate px-0">
-                                    <div class="row p-0">
-                                        <div class="col">
-                                            <span class="">
-                                                <i class="fa-brands fa-google"></i>
-                                            </span>
-                                            <span class="">
-                                                Site
-                                            </span>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            -->
-
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 bg-success-subtle g-2" v-if="forceRefresh">
             <div class="col" v-for="(category, categoryIndex) in categoryList" :key="categoryIndex">
                 <div class="col">
                     <div class="card text-center">
@@ -151,7 +74,9 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item p-0">
                                     <template v-for="(site, siteIndex) in category.sites" :key="categoryIndex+'x'+siteIndex">
-                                        <ul class="list-group list-group-horizontal">
+                                        <ul class="list-group list-group-horizontal"
+                                            @click.shift="siteButtonLuckyAction(site)"
+                                            @click="siteButtonAction(site)">
                                             <li class="list-group-item list-group-item-action flex-fill px-0">
                                                 <div class="row p-0">
                                                     <div class="col">
@@ -306,7 +231,7 @@
                         <div class="row justify-content-around text-center">
                             <div class="col">
                                 <div class="btn btn-success"
-                                     @click="pushSite(editedSite.categoryIndex, editedSite.name, editedSite.adress, editedSite.searchAddress, editedSite.color, editedSite.icon, editedSite.siteIndex)">
+                                     @click="pushSite(editedSite.categoryIndex, editedSite.name, editedSite.address, editedSite.searchAddress, editedSite.color, editedSite.icon, editedSite.siteIndex)">
                                     Save
                                 </div>
                             </div>
@@ -325,6 +250,25 @@
                 </div>
             </div>
         </div>
+
+        <div class="row text-center">
+            <div class="col">
+                <div class="btn btn-primary" @click="redirect(searchQuery)">
+                    Redirect
+                </div>
+            </div>
+            <div class="col">
+                <div class="btn btn-success" @click="search(searchQuery)">
+                    Search
+                </div>
+            </div>
+            <div class="col">
+                <div class="btn btn-info" @click="search(searchQuery,'https://pl.wikipedia.org/wiki/')">
+                    Search Wiki
+                </div>
+            </div>
+        </div>
+
 
         <div class="row text-center bg-warning fixed-bottom">
             <div class="col">
@@ -368,7 +312,7 @@
         data() {
             return {
                 //important variables
-                editMode: true,
+                editMode: false,
                 forceRefresh: true,
                 editCategoryModal: null,
                 editSiteModal: null,
@@ -390,6 +334,10 @@
                     icon: null
                 },
                 categoryList: [],
+                /* query variables */
+                defaultSearchAddress: "https://www.google.com/search?q=",
+                defaultLuckySearchAddress: "https://google.com/search?btnI=&q=",
+                searchQuery: '',
             }
         },
         watch: {
@@ -401,19 +349,66 @@
                 await this.$nextTick();
                 this.forceRefresh = true;
             },
+            // START Search functions
+            /* redirect user to other page, argument gets string site address or page object */
+            redirect(site){
+                let protocolRegex = new RegExp("^(http|https)://", "i");
+                let wwwRegex = new RegExp("www.", "i");                
+                if(!wwwRegex.test(site) && !protocolRegex.test(site))
+                    site = 'www.'+site;
+                if(!protocolRegex.test(site))
+                    site = 'https://'+site;
+                window.location.href = site;
+            },
+            /* searches query in default search engine, optionally using site(address) or site(object) */
+            search(query, site){
+                if(!site){
+                    this.redirect(this.defaultSearchAddress+encodeURI(query));
+                }else{
+                    if( typeof site === 'string' ){
+                        console.log("Searching by site string: "+site);
+                        this.redirect(site+encodeURI(query));
+                    }else if( site.hasOwnProperty('searchAddress') ){
+                        console.log("Searching by site.searchAddress: "+site);
+                        this.redirect(site.searchAddress+encodeURI(query));
+                    }
+                }
+
+            },
+            searchButtonAction(){
+                this.search(this.searchQuery, this.defaultSearchAddress);
+            },
+            luckyButtonAction(){
+                this.search(this.searchQuery, this.defaultLuckySearchAddress);
+            },
+            siteButtonAction(site){
+                if(this.searchQuery && this.searchQuery.length>0){
+                    if( site !== undefined && site.hasOwnProperty('searchAddress')){
+                        this.redirect(site.searchAddress+this.searchQuery);
+                    }
+                }else{
+                    this.redirect(site.address);
+                }
+            },
+            siteButtonLuckyAction(site){
+                if( site !== undefined && site.hasOwnProperty('address') && site.hasOwnProperty('searchAddress')){
+                    this.redirect(this.defaultLuckySearchAddress+"site:"+site.address+" "+this.searchQuery);
+                }
+            },
+            // END Search functions
             saveSitesToSessionStorage(){
                 sessionStorage.setItem("categoryList", JSON.stringify(this.categoryList) );
             },
             loadSitesFromSessionStorage(){
                 this.categoryList = JSON.parse( sessionStorage.getItem("categoryList") ) || [];
             },
-            pushSite(categoryIndex, name, adress, searchAddress, color, icon, siteIndex=null) {
+            pushSite(categoryIndex, name, address, searchAddress, color, icon, siteIndex=null) {
                 this.editSiteModal.hide();
                 if(siteIndex === null){
                     this.categoryList[categoryIndex].sites.push({
                         categoryIndex: this.categoryList[categoryIndex].sites.length,
                         name: name,
-                        adress: adress,
+                        address: address,
                         searchAddress: searchAddress,
                         color: color,
                         icon: icon
@@ -423,7 +418,7 @@
                         siteIndex: siteIndex,
                         categoryIndex: this.categoryList[categoryIndex].sites.length,
                         name: name,
-                        adress: adress,
+                        address: address,
                         searchAddress: searchAddress,
                         color: color,
                         icon: icon
