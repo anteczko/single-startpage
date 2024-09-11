@@ -1,12 +1,4 @@
-Entites:
-category:
--name
--color
--iconString
-
-site:
--name
--adress
--searchAddressb
--color
--iconString
+Importing/Exporting data:
+-json file
+-txt file
+-copy to clipboard
