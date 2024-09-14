@@ -78,10 +78,10 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item p-0">
                                     <template v-for="(site, siteIndex) in category.sites" :key="categoryIndex+'x'+siteIndex">
-                                        <ul class="list-group list-group-horizontal"
-                                            @click.shift="siteButtonLuckyAction(site)"
-                                            @click="siteButtonAction(site)">
-                                            <li class="list-group-item list-group-item-action flex-fill px-0">
+                                        <ul class="list-group list-group-horizontal">
+                                            <li class="list-group-item list-group-item-action flex-fill px-0"
+                                                @click.shift="siteButtonLuckyAction(site)"
+                                                @click="siteButtonAction(site)">
                                                 <div class="row p-0">
                                                     <div class="col">
                                                     <span class="">
