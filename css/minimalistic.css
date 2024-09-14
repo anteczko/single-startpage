@@ -1,3 +1,85 @@
-#logo {
+/* super minimalist theme */
 
+/* START removing borders of bootstrap */
+#search-input-group .form-control,  
+#search-input-group .btn{
+    border: 0;
 }
+
+.category .card,
+.category .list-group-item{
+    border: 0;
+}
+/* END removing borders of bootstrap */
+
+/* START page styling and padding */
+@media (min-width: 400px) {
+    #app {
+        padding: 30px;
+    }
+}
+
+
+#search-input-row {
+    padding: 10px;
+}
+/* END page styling and padding */
+
+/* START logo styling */
+#logo {
+    height: 40vh;
+    max-height: 40vh;
+    
+  }
+
+@media (max-width: 400px) {
+    #logo {
+        height: 30vh;
+    }
+}
+/* END logo styling */
+
+#settings-buttons {
+    background-color: white;
+}
+  
+#settings-buttons .btn{
+    background-color: white;
+    color: black;
+    border: 0;
+}
+
+/* START input group styling */
+#search-input-group .form-control{
+    border-radius: 0;
+    border-bottom: 1px solid gray;
+}
+
+#search-input-group input:focus,
+#search-input-group input:hover {
+    border-radius: 0;
+    box-shadow: none;
+    background-color: rgba(0,0,0,0.05);
+    
+}
+
+#search-input-group .btn {
+    color: black;
+}
+
+#search-input-group .btn:hover {
+    color: white;
+    background-color: gray;
+}
+/* END input group styling */
+
+/* START category styling */
+.col .list-group-item .category-header:after {
+    content:'';
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    width:90%;
+    border-bottom: 1px solid #888;
+ }
+/* END category styling */

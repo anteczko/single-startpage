@@ -23,21 +23,19 @@
 <!-- second version, mobile friendly -->
 <body>
 <div id="app">
-    <div class="container-fluid bg-danger">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col col-12 bg-info-subtle ">
-                <div class="d-flex justify-content-center" id="logo">
-                    <div style="width: 400px; height: 200px; background-color: pink">
-                        <center><h1>LOGO</h1></center>
-                    </div>
+            <div class="col col-12">
+                <div class="d-flex justify-content-center">
+                    <img id="logo" :src="logoSrc">
                 </div>
             </div>
         </div>
 
 
-        <div class="row justify-content-center">
-            <div class="col col-12 bg-warning p-3">
-                <div class="input-group">
+        <div class="row justify-content-center" id="search-input-row">
+            <div class="col col-12 p-3">
+                <div class="input-group" id="search-input-group">
                     <input type="text" class="form-control" v-model="searchQuery"
                         @keyup.shift.enter="luckyButtonAction"
                         @keyup.enter="searchButtonAction">
@@ -50,8 +48,8 @@
         </div>
 
 
-        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 bg-success-subtle g-2" v-if="forceRefresh">
-            <div class="col" v-for="(category, categoryIndex) in categoryList" :key="categoryIndex">
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-2" v-if="forceRefresh">
+            <div class="col category" v-for="(category, categoryIndex) in categoryList" :key="categoryIndex">
                 <div class="col">
                     <div class="card text-center">
                         <ul class="list-group list-group-flush">
@@ -62,7 +60,10 @@
                                             @click="moveCategory(categoryIndex, (categoryIndex-1))">
                                             <i class="fa-solid fa-angle-left"></i>
                                         </li>
-                                        <li class="col list-group-item">
+                                        <li class="col list-group-item category-header">
+                                            <span class="">
+                                                <i v-if="category.icon" :class="[category.icon]"></i>
+                                            </span>
                                             {{ category.name }}
                                         </li>
                                         <li v-if="editMode" class="list-group-item btn btn-info" @click="initalizeEditCategory(category.name, category.color, category.icon, categoryIndex, category.sites)">
@@ -88,9 +89,7 @@
                                                     <span class="">
                                                         <i v-if="site.icon" :class="[site.icon]"></i>
                                                     </span>
-                                                        <span class="">
-                                                            {{ site.name }}
-                                                        </span>
+                                                    {{ site.name }}
                                                     </div>
                                                 </div>
                                             </li>
@@ -257,21 +256,10 @@
         </div>
 
         
-        <div class="row text-center bg-warning fixed-bottom">
+        <div class="row text-center fixed-bottom" id="settings-buttons">
             <div class="col">
                 <div class="btn btn-success" @click="editMode = !editMode">
                     Edit
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="btn btn-success" @click="editCategoryModal.toggle()">
-                    Category
-                </div>
-            </div>
-            <div class="col">
-                <div class="btn btn-success" @click="editSiteModal.toggle()">
-                    Site
                 </div>
             </div>
 
@@ -281,7 +269,7 @@
                         Export
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" @click="saveSitesToSessionStorage">Session storage</a></li>
+                        <li><a class="dropdown-item" @click="saveSitesToLocalStorage">Session storage</a></li>
                         <li><a class="dropdown-item" @click="saveSitesToFile">File</a></li>
                         <li><a class="dropdown-item" href="#">Copy text</a></li>
                         <li><a class="dropdown-item" href="#">Bookmark link</a></li>
@@ -294,7 +282,7 @@
                         Import
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" @click="loadSitesFromSessionStorage">Session storage</a></li>
+                        <li><a class="dropdown-item" @click="loadSitesFromLocalStorage">Session storage</a></li>
                         <li><a class="dropdown-item" href="#">
                             <input type="file" accept=".json" @change="loadSitesFromFile" />
                         </a></li>
@@ -307,8 +295,8 @@
 </div>
 </body>
 
-
-<script>
+<script type="module">
+    import { defaultCategoriesList } from './data/defaultData.js'
 
     // Create a Vue instance
     const app = Vue.createApp({
@@ -418,7 +406,7 @@
                         try {
                             console.log( fileEvent.target.result );
                             this.categoryList = JSON.parse(fileEvent.target.result);
-                            this.saveSitesToSessionStorage();
+                            this.saveSitesToLocalStorage();
                         }catch(error){
                             console.log(error);
                             reject(error);
@@ -431,11 +419,11 @@
                     reader.readAsText(event.target.files[0]);
                 }
             },
-            saveSitesToSessionStorage(){
-                sessionStorage.setItem("categoryList", JSON.stringify(this.categoryList) );
+            saveSitesToLocalStorage(){
+                localStorage.setItem("categoryList", JSON.stringify(this.categoryList) );
             },
-            loadSitesFromSessionStorage(){
-                this.categoryList = JSON.parse( sessionStorage.getItem("categoryList") ) || [];
+            loadSitesFromLocalStorage(){
+                this.categoryList = JSON.parse( localStorage.getItem("categoryList") ) || [];
             },
             // END data storage functions
             pushSite(categoryIndex, name, address, searchAddress, color, icon, siteIndex=null) {
@@ -594,10 +582,14 @@
             this.editSiteModal = new bootstrap.Offcanvas(document.getElementById('offcanvasEditSite'));
             this.editCategoryModal = new bootstrap.Offcanvas(document.getElementById('offcanvasEditCategory'));
 
-            this.loadSitesFromSessionStorage();
+            this.loadSitesFromLocalStorage();
+            if( this.categoryList.length === 0){
+                this.categoryList = defaultCategoriesList;
+            }
         },
         beforeMount() {
-
+            let random = 1+Math.round(3*Math.random());
+            this.logoSrc = '/images/banners/initiald'+random+'.jpg';
         },
     });
 
