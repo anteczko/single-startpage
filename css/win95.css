@@ -1,0 +1,90 @@
+/* START removing borders of bootstrap */
+
+#app {
+    padding: 30px;
+    background-color: #008282;
+
+    --border-width: 5px;
+    --font-size: 16px;
+}
+
+#app * {
+    border-radius: 0;
+}
+
+/*
+#search-input-row {
+    background-color: #C3C3C3;
+    border: 3px solid white;
+    border-style: outset;
+}
+
+#search-input-row:before {
+    content:'';
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-top: 25px solid #000082;
+}
+
+#search-input-group{
+    border: 3px solid white;
+    border-style: inset;
+}
+
+#search-input-group {
+    border: 5px solid blue; 
+    outline: 3px solid red;
+    outline-style: inset;
+}
+*/
+
+#search-input-row {
+    margin: 10px;
+    background-color: #C0C0C0;
+    border-radius: 0;
+
+    border: var(--border-width) solid white;
+    border-style: outset;
+
+    outline: var(--border-width) solid black;
+    outline-style: outset;
+    /* outline: var(--border-width) inset red;*/
+}
+
+#search-input-title {
+    margin: var(--border-width);
+    width: calc(100% - var(--border-width)*2);
+
+    background-color: #000080;
+    color: white;
+    padding: var(--border-width);
+
+    font-size: var(--font-size);
+    font-weight: bold;
+    padding-left: calc( var(--font-size)*1 );
+}
+
+.btn {
+    margin-inline: calc( var(--border-width)*4 );
+    background-color: #C0C0C0;
+    border-radius: 0;
+
+    border: var(--border-width) solid black;
+    border-style: outset;
+
+    outline: var(--border-width) solid white;
+    outline-style: outset;
+}
+
+#search-input-group input {
+    margin-inline: calc( var(--border-width)*4 );
+    border-radius: 0;
+
+    border: var(--border-width) solid black;
+    border-style: inset;
+
+    outline: var(--border-width) solid white;
+    outline-style: inset;
+}
